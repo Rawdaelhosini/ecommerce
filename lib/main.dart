@@ -41,6 +41,7 @@ void main() async {
             child = LoginScreen();
         }
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: CustomTheme.getTheme(),
           home: child,
         );
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -74,13 +75,13 @@ class MyApp extends StatelessWidget {
               tabs: [
                 Tab(icon: Icon(Icons.home)),
                 Tab(icon: Icon(Icons.person)),
-                Tab(icon: Icon(Icons.shopping_cart)),
+                // Tab(icon: Icon(Icons.shopping_cart)),
               ]),
         ),
         body: const TabBarView(children: [
           HomeScreen(),
           ProfileScreen(),
-          CheckoutScreen(),
+          // CheckoutScreen(),
         ]),
       ),
     );

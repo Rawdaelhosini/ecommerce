@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductScreen extends StatefulWidget {
-  final Product product;
+  final ProductModel product;
   const ProductScreen({Key? key, required this.product}) : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class _ProductScreenState extends State<ProductScreen> {
     });
     await FireStoreUtil.AddToCart(
         Provider.of<ApplicationState>(context, listen: false).user,
-        widget.product.id);
+        widget.product.id!);
     setState(() {
       addButtonLoad = false;
     });
@@ -47,7 +47,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       width: double.infinity,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: widget.product.image,
+                        imageUrl: widget.product.image!,
                       ),
                     ),
                     Positioned(
@@ -81,7 +81,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(top: 22),
-                          child: Text(widget.product.title),
+                          child: Text(widget.product.title!),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -107,7 +107,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Text(
-                            widget.product.description,
+                            widget.product.description!,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         )

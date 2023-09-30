@@ -1,5 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, avoid_types_as_parameter_names, unused_local_variable
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/models/cart.dart';
 import 'package:ecommerce/models/product.dart';
@@ -10,14 +10,16 @@ class FireStoreUtil {
   static const String productCollection = 'product';
   static const String customerCollection = 'customers';
   static const String cartCollection = 'cart';
+
   static Future<List<Product>> getProducts(List<String>? ids) async {
     try {
       final prodyctRef = FirebaseFirestore.instance
           .collection(productCollection)
           .withConverter<Product>(
               fromFirestore: (snapshot, _) =>
-                  Product.fromJson(snapshot.data()!),
-              toFirestore: (Product, _) => Product.toJson());
+                  Product.formJson(snapshot.data()!),
+              toFirestore: (product, _) => product.toJson!);
+
       QuerySnapshot<Product> productDoc;
       if (ids != null && ids.isNotEmpty) {
         productDoc = await prodyctRef.where('id', whereIn: ids).get();
@@ -66,9 +68,9 @@ class FireStoreUtil {
       List<Product> products = await getProducts(productIds);
       for (var element in cartRef.docs) {
         Product product = products.firstWhere((prod) => prod.id == element.id);
-        var json = product.toJson();
-        json['count'] = element['count'];
-        carts.add(Cart.fromJson(json));
+        var json = product.toJson;
+        // json['count'] = element['count'];
+        carts.add(Cart.formJson(json!));
       }
     } on FirebaseException catch (e, stackTrace) {
       log("Error getting cart", stackTrace: stackTrace, error: e);
